@@ -1,5 +1,6 @@
 const express = require('express')
 const path = require('path')
+const cors = require('cors')
 
 const app = express();
 const server = require('http').createServer(app)
@@ -10,6 +11,7 @@ app.set('views', path.join(__dirname, 'public'))
 app.engine('html', require('ejs').renderFile)
 app.set('view engine', 'html')
 
+app.use(cors())
 app.use('/', (req, res) => {
     res.render('index.html')
 })
@@ -27,7 +29,7 @@ io.on('connection', socket => {
         socket.broadcast.emit('receivedMessage', data)
     })
     online++
-    
+
     socket.broadcast.emit('usersOnline', online)
 })
 
