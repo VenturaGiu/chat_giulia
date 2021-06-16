@@ -36,8 +36,8 @@ io.on('connection', socket => {
         messages.push(data)
         socket.broadcast.emit('receivedMessage', data)
     })
+    
     online++
-
     socket.broadcast.emit('usersOnline', online)
 })
 
