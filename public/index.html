@@ -56,7 +56,7 @@
                 }
                 renderMessage(messageObj)
                 socket.emit('sendMessage', messageObj)
-                $(".message").val("");
+                $('input[name=message]').val(" ");
             }
         })
     </script>
