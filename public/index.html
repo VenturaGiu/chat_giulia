@@ -19,7 +19,7 @@
     </form>
 
     <script type="text/javascript">
-        let socket = io()
+        let socket = io('https://chatjulanodejs.herokuapp.com/')
 
         function renderMessage(message){
             $('.messages').append('<div class="message"><strong>'+ message.autor +'</strong>: '+ message.message +'</div>')
