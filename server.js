@@ -22,7 +22,7 @@ app.use((req, res) => {
 app.use(cors())
 app.use('/', (req, res) => {
     res.render('index.html')
-})
+})  
 
 let messages = []
 let online = 0
