@@ -33,4 +33,4 @@ io.on('connection', socket => {
     socket.broadcast.emit('usersOnline', online)
 })
 
-server.listen(3000)
+server.listen(process.env.PORT || 3000)
