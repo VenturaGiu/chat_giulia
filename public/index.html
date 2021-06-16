@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat da Jula</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js" integrity="sha512-iZIBSs+gDyTH0ZhUem9eQ1t4DcEn2B9lHxfRMeGQhyNdSUz+rb+5A3ummX6DQTOIs1XK0gOteOg/LPtSo9VJ+w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+    <form id="chat">
+        <div class="onlines"></div>
+        <input type="text" name="username" placeholder="Nome de Usuário"/>
+        <div class="messages"></div>
+        <input type="text" name="message" placeholder="Mensagem"/>
+        <button type="submit">Enviar</button>
+    </form>
+
+    <script type="text/javascript">
+        let socket = io('http://localhost:3000/')
+
+        function renderMessage(message){
+            $('.messages').append('<div class="message"><strong>'+ message.autor +'</strong>: '+ message.message +'</div>')
+        }
+
+        function renderUsers(online){
+            $('.onlines').append('<div class="online"><strong>Pessoas Online: '+ online +'</strong></div>')
+        }
+
+        socket.on('previousMessage', function(messages){
+            for(message of messages){
+                renderMessage(message)
+            }
+        })
+
+        socket.on('receivedMessage', function(message){
+            renderMessage(message)
+        })
+
+        socket.on('usersOnline', function(online){
+            renderUsers(online)
+        })
+
+        $('#chat').submit(function(event){
+            event.preventDefault()
+
+            let autor = $('input[name=username]').val()
+            let message = $('input[name=message]').val()
+
+            if(autor.length && message.length){
+                let messageObj = {
+                    autor: autor,
+                    message: message
+                }
+                renderMessage(messageObj)
+                socket.emit('sendMessage', messageObj)
+            }
+        })
+    </script>
+</body>
+</html>
