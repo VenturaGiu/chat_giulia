@@ -21,7 +21,7 @@ let online = 0
 
 io.on('connection', socket => {
     console.log(`Socket Conectado: ${socket.id}`)
-
+    
     socket.emit('previousMessage', messages)
 
     socket.on('sendMessage', data => {
