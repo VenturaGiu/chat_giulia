@@ -29,14 +29,15 @@ let online = 0
 
 io.on('connection', socket => {
     console.log(`Socket Conectado: ${socket.id}`)
-
+    
     socket.emit('previousMessage', messages)
-
+    
     socket.on('sendMessage', data => {
+        let date = new Date();
         messages.push(data)
         socket.broadcast.emit('receivedMessage', data)
+        console.log(date)
     })
-    
     online++
     socket.broadcast.emit('usersOnline', online)
 })

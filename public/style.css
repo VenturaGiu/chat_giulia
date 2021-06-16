@@ -39,6 +39,7 @@ html, body {
   .messages {
     width: 600px;
     height: 400px;
+    overflow-y: scroll;
     margin: 20px 0;
     border: 1px solid #ddd;
     padding: 20px;
