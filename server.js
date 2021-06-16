@@ -11,6 +11,14 @@ app.set('views', path.join(__dirname, 'public'))
 app.engine('html', require('ejs').renderFile)
 app.set('view engine', 'html')
 
+
+app.use((req, res) => {
+    res.header('Access-Control-Allow-Credentials', true);
+    res.header('Access-Control-Allow-Origin', req.headers.origin);
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+})
+
 app.use(cors())
 app.use('/', (req, res) => {
     res.render('index.html')
@@ -21,7 +29,7 @@ let online = 0
 
 io.on('connection', socket => {
     console.log(`Socket Conectado: ${socket.id}`)
-    
+
     socket.emit('previousMessage', messages)
 
     socket.on('sendMessage', data => {
