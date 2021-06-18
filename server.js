@@ -33,10 +33,8 @@ io.on('connection', socket => {
     socket.emit('previousMessage', messages)
     
     socket.on('sendMessage', data => {
-        let date = new Date();
         messages.push(data)
         socket.broadcast.emit('receivedMessage', data)
-        console.log(date)
     })
     online++
     socket.broadcast.emit('usersOnline', online)

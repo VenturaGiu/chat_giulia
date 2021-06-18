@@ -1,5 +1,6 @@
 html, body {
     height: 100%;
+    background-color: black;
   }
   
   * {
@@ -16,31 +17,85 @@ html, body {
     flex-direction: column;
   }
   
-  input {
+  .messages {
+    background-color: black;
     width: 600px;
-    border: 1px solid #ddd;
-    height: 50px;
-    padding: 0 20px;
-    font-size: 14px;
+    height: 400px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin: 20px 0;
+    border: 1px solid rgb(53, 53, 53);
+    padding: 20px;
   }
   
-  button {
+  input {
     width: 600px;
     height: 50px;
+    border: 1px solid rgb(66, 66, 66);
+    padding: 0 20px;
     font-size: 14px;
-    background: #069;
+    color: white;
+    background-color: rgb(66, 66, 66);
+    border-radius: 5px;
+  }
+
+  button {
+    width: 90px;
+    height: 50px;
+    font-size: 14px;
+    background-image: linear-gradient(to right, rgba(207, 157, 200, 0.842), rgba(179, 157, 207, 0.842),rgba(157, 191, 207, 0.842)); 
+    border-radius: 100px;
+    border: none;
     text-align: center;
     line-height: 50px;
     font-weight: bold;
     color: #FFF;
     margin-top: 10px;
+    float: left;
+    margin: 0 auto;
   }
   
-  .messages {
+  #footerInput{
+    float: left;
+    width: 500px !important;
+    margin-right: 10px;
+    margin: 0 auto;
+  }
+
+  .footer{
     width: 600px;
-    height: 400px;
-    overflow-y: scroll;
-    margin: 20px 0;
-    border: 1px solid #ddd;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .message{
+    width: 400px !important;
+    min-height: 70px;
+    height: auto;
+    overflow: hidden;
+    background-image: linear-gradient(to right, rgba(207, 157, 200, 0.842), rgba(179, 157, 207, 0.842),rgba(157, 191, 207, 0.842)); 
+    border-radius: 10px;
     padding: 20px;
+    margin-bottom: 2%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  #dataQuem{
+    margin: 0 auto;
+    width: 100%;
+    float: left;
+  }
+
+  #mensagemP{
+    float: left;
+    margin: 0 auto;
+    min-height: 10px;
+    height: auto;
+    width: 100%;
+    margin-top: 2%;
   }

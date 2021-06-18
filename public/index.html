@@ -1,56 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat da Jula</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js" integrity="sha512-iZIBSs+gDyTH0ZhUem9eQ1t4DcEn2B9lHxfRMeGQhyNdSUz+rb+5A3ummX6DQTOIs1XK0gOteOg/LPtSo9VJ+w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="style.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"
+        integrity="sha512-iZIBSs+gDyTH0ZhUem9eQ1t4DcEn2B9lHxfRMeGQhyNdSUz+rb+5A3ummX6DQTOIs1XK0gOteOg/LPtSo9VJ+w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
     <form id="chat">
         <div class="onlines"></div>
-        <input type="text" name="username" placeholder="Nome de Usuário"/>
+        <input type="text" name="username" placeholder="Nome de Usuário" />
         <div class="messages"></div>
-        <input type="text" name="message" placeholder="Mensagem"/>
-        <button type="submit">Enviar</button>
+        <div class="footer">
+            <input id="footerInput" type="text" name="message" placeholder="Mensagem" />
+            <button type="submit">Enviar</button>
+        </div>
     </form>
 
     <script type="text/javascript">
         let socket = io('https://chatjulanodejs.herokuapp.com/')
-
-        function renderMessage(message){
-            $('.messages').append('<div class="message"><strong>'+ message.autor +'</strong>: '+ message.message +'</div>')
+        /* let socket = io('http://localhost:3000/') */
+        function renderMessage(message) {
+            $('.messages').append('<div class="message"><p id="dataQuem"><strong>' + message.date + ' ' + message.autor + ': </strong></p><div id="mensagemP">' + message.message + '</div></div>')
+            
         }
 
-        function renderUsers(online){
-            $('.onlines').append('<div class="online"><strong>Pessoas Online: '+ online +'</strong></div>')
+        function renderUsers(online) {
+            $('.onlines').append('<div class="online"><strong>Pessoas Online: ' + online + '</strong></div>')
         }
 
-        socket.on('previousMessage', function(messages){
-            for(message of messages){
+        socket.on('previousMessage', function (messages) {
+            for (message of messages) {
                 renderMessage(message)
             }
         })
 
-        socket.on('receivedMessage', function(message){
+        socket.on('receivedMessage', function (message) {
             renderMessage(message)
         })
 
-        socket.on('usersOnline', function(online){
+        socket.on('usersOnline', function (online) {
             renderUsers(online)
         })
 
-        $('#chat').submit(function(event){
+        $('#chat').submit(function (event) {
             event.preventDefault()
 
+            let date = new Date();
+            date = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear() + '[' + date.getHours() + ':' + date.getMinutes() + ']'
             let autor = $('input[name=username]').val()
             let message = $('input[name=message]').val()
 
-            if(autor.length && message.length){
+            if (autor.length && message.length) {
                 let messageObj = {
+                    date: date,
                     autor: autor,
                     message: message
                 }
@@ -61,4 +73,5 @@
         })
     </script>
 </body>
+
 </html>
